@@ -1,0 +1,22 @@
+{% extends 'post/base.html' %}
+{% block title %}
+Login Page
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br>
+        <form method="POST">
+            {% csrf_token %}
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Username"><br>
+            <label>Password</label>
+            <input type="password" name="password"><br>
+            <button class="btn btn-primary">Login</button>
+            <p>Do not have account?<span> <a href="{% url 'register' %}">Register</a></span></p>
+        </form>
+        {% for message in messages %}
+        <h3>{{message}}</h3>
+        {% endfor %}
+    </div>
+{% endblock body %}

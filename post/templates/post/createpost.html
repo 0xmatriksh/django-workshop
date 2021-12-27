@@ -1,0 +1,30 @@
+{% extends 'post/base.html' %}
+{% load humanize %}
+{% block title %}
+Create Post
+{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Title : </label>
+        <input type="text" name="title"><br>
+        <label>Category : </label>
+        <select type="text" name="category">
+            {% for category in categories %}
+            <option value="{{category.name}}">{{category.name}}</option>
+            {% endfor %}
+        </select><br>
+        <label>Content : </label>
+        <textarea name="content"></textarea><br>
+        <label>Select Image : </label>
+        <input type="file" name="image" accept="image/*"><br>
+        <button class="btn btn-primary">Create Post</button>
+        {% for message in messages %}
+        <h3>{{message}}</h3>
+        {% endfor %}
+    </form>
+
+{% endblock body %}

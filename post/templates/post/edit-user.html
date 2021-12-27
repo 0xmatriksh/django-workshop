@@ -1,0 +1,26 @@
+{% extends 'post/base.html' %}
+{% block title %}
+Edit Profile
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <h3>User Profile</h3>
+        <div class="media">
+            <img class="rounded-circle account-img" style="height: 100px; width: 100px;" src="{{ user.author.profile_pic.url }}">
+            <div class="media-body">
+              <h2 class="account-heading">{{ user.username }}</h2>
+              <p class="text-secondary">{{ user.email }}</p>
+            </div>
+          </div>
+          <hr>
+        <form class="needs-validation" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{author.as_p}}
+            <button class="btn btn-primary">Edit</button>
+        </form>
+        {% for message in messages %}
+        <h3>{{message}}</h3>
+        {% endfor %}
+    </div>
+{% endblock body %}
