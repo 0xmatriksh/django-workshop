@@ -2,7 +2,7 @@ from typing import AsyncIterable
 from django.contrib.auth.models import User
 from django.core import paginator
 from django.shortcuts import redirect, render
-from .models import Author, BlogPost, Category
+from .models import Author, BlogPost, Category, Chat
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from .forms import EditProfile
@@ -25,10 +25,13 @@ def home(request):
     categories = Category.objects.all()
     page_number = request.GET.get('page')
     p_posts = paginator.get_page(page_number)
+    featured_posts = BlogPost.objects.filter(is_featured=True)
+    print(featured_posts)
     context = {
         'posts':p_posts,
         'paginator':paginator,
-        'categories':categories
+        'categories':categories,
+        'featured_posts':featured_posts,
     }
     return render(request,'post/index.html',context)
 
@@ -147,4 +150,15 @@ def mypost(request):
         'posts':posts,
     }
     return render(request,'post/mypost.html',context)
+
+def chat(request):
+    if request.method == "POST":
+        chat = request.POST.get('message')
+        new_chat = Chat(sender=request.user,message=chat)
+        new_chat.save()
+    chats = Chat.objects.all()
+    context = {
+        'chats':chats
+    }
+    return render(request,'post/chat.html',context)
 

@@ -1,0 +1,33 @@
+{% extends 'post/base.html' %}
+{% load humanize %}
+{% block title %}
+Public Chat
+{% endblock title %}
+{% block body %}
+<div class="container mt-4 d-flex justify-content-center">
+    <div style="border: 1px solid; height: 500px; width: 500px;">
+        <div style="height:400px;">
+
+            {% for chat in chats %}
+            <div style="margin-top: 15px;">
+                {{chat.sender}} : 
+                <span style=" background-color: lightblue; border: 1px solid; padding: 5px; border-radius: 5px; width: fit-content;">
+                    <span style="font-weight: bold;">{{chat.message}}</span>
+                    <span style="font-size: 10px; font-style: italic;">{{chat.created_at|naturaltime}}</span>
+                </span>
+            </div>
+            {% endfor %}
+
+        </div>
+        <hr>
+        <div>
+            <form class="d-flex justify-content-around" style="height: 50px; padding: 5px;" method="POST">
+                {% csrf_token %}
+                <input type="text"class="form-control" name="message" placeholder="Enter message...">
+                <button class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+    
+</div>
+{% endblock body %}

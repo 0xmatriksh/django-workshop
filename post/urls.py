@@ -1,6 +1,6 @@
 from django.urls import path
 from django.urls import path
-from .views import home,about,loginpage,post_details,create_post,logoutpage,registerpage,editprofile,mypost
+from .views import home,about,loginpage,post_details,create_post,logoutpage,registerpage,editprofile,mypost,chat
 
 urlpatterns = [
     path('',home,name='home'),
@@ -12,4 +12,5 @@ urlpatterns = [
     path('register',registerpage,name='register'),
     path('edit-profile',editprofile,name="edit-profile"),
     path('mypost',mypost,name="mypost"),
+    path('chat',chat,name="chat"),
     ]

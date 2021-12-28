@@ -36,3 +36,10 @@ class Author(models.Model):
     def __str__(self):
         return self.user.username
     
+class Chat(models.Model):
+    sender = models.ForeignKey(User,on_delete=models.CASCADE)
+    message = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.message

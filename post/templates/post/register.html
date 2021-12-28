@@ -4,24 +4,44 @@ Create Post
 {% endblock title %}
 
 {% block body %}
-    <div class="container">
+    <div class="container mt-4 d-flex justify-content-center">
         <br>
-        <form method="POST">
+        <form class="form-signin mt-3 mb-4" method="POST">
             {% csrf_token %}
+            <div class="form-label-group">
             <label>Username</label>
-            <input type="text" name="username" placeholder="Username"><br>
+            <input type="text" name="username" class="form-control" placeholder="Username">
+            </div>
+
+            <div class="form-label-group">
             <label>Name</label>
-            <input type="text" name="name" placeholder="Name"><br>
-            <label>Phone</label>
-            <input type="text" name="phone" placeholder="Ph. Number"><br>
-            <label>Email</label>
-            <input type="email" name="email" placeholder="Email"><br>
-            <label>Password</label>
-            <input type="password" name="password"><br>
-            <label>Confirm Password</label>
-            <input type="password" name="c_password"><br>
-            <button class="btn btn-primary">Login</button>
+            <input type="text" name="name" class="form-control" placeholder="Name">
+            </div>
+
+            <div class="form-label-group">
+                <label>Phone</label>
+                <input type="text" name="phone" class="form-control" placeholder="Ph. Number">
+            </div>
+
+            <div class="form-label-group">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" placeholder="Email">
+            </div>
+
+            <div class="form-label-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+
+            <div class="form-label-group">
+                <label>Confirm Password</label>
+                <input type="password" name="c_password" class="form-control">
+            </div>
+
             <p>Already Have an Account?<span> <a href="{% url 'login' %}">Login</a></span></p>
+            
+            <button class="btn btn-lg btn-primary btn-block">Login</button>
+            
             
         </form>
         {% for message in messages %}
