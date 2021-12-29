@@ -41,9 +41,6 @@
                         <li class="nav-item ">
                             <a class="nav-link" href="#">About Us</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact us </a>
-                        </li>
                         {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Logout </a>
@@ -53,6 +50,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'edit-profile' %}">Edit Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chat' %}">Chat Room</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'mypost' %}" aria-disabled="true">Hello, {{user.author.name}} </a>

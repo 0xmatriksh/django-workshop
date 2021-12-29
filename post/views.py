@@ -15,24 +15,30 @@ from django.core.paginator import Paginator
 def home(request):
     # posts = BlogPost.objects.all()
     s_w = request.GET.get('q')
-    if s_w is None:
-        posts = BlogPost.objects.all()
-    else:
-        s_w = str(s_w).title()
-        posts = BlogPost.objects.filter(Q(title__startswith=s_w))
+    cat = request.GET.get('cat')
     
-    paginator = Paginator(posts,2)
+    if s_w is not None:
+        s_w = str(s_w).title()
+        posts = BlogPost.objects.filter(title__icontains=s_w).order_by("-created_at")
+    elif cat is not None:
+        category = Category.objects.get(name=cat)
+        posts = BlogPost.objects.filter(category=category).order_by("-created_at")
+    else:
+        posts = BlogPost.objects.all().order_by("-created_at")
+        
+    paginator = Paginator(posts,4)
     categories = Category.objects.all()
     page_number = request.GET.get('page')
     p_posts = paginator.get_page(page_number)
     featured_posts = BlogPost.objects.filter(is_featured=True)
-    print(featured_posts)
+
     context = {
         'posts':p_posts,
         'paginator':paginator,
         'categories':categories,
         'featured_posts':featured_posts,
     }
+
     return render(request,'post/index.html',context)
 
 def about(request):
@@ -67,6 +73,7 @@ def registerpage(request):
             p_user = User.objects.get(username=username)
         except:
             p_user = None
+
         if p_user is not None:
             messages.error(request, "Username already exists.")
             return redirect('register')
@@ -83,6 +90,7 @@ def registerpage(request):
             author.save()
             messages.error(request,'Account Created Succesfully')
             return redirect('register')
+
     return render(request,'post/register.html')
 
 def loginpage(request):
@@ -90,11 +98,13 @@ def loginpage(request):
         name = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request,username=name,password=password)
+
         if user is not None:
             login(request,user)
             return redirect('home')
         else:
             messages.error(request, "No user matching those credentials.")
+
     return render(request,'post/login.html')
 
 def logoutpage(request):
@@ -111,6 +121,7 @@ def post_details(request,pk):
 @login_required(login_url='login')
 def create_post(request):
     categories = Category.objects.all()
+
     if (request.method == 'POST'):
         # print(request.user)
         title = request.POST['title']
@@ -124,25 +135,30 @@ def create_post(request):
             image= image
             )
         blog.save()
+        
         messages.add_message(request,messages.INFO,'Post created Successfully !!!')
+
     context = {
         'categories':categories,
     }
+
     return render(request,'post/createpost.html',context)
 
 def editprofile(request):
     user = User.objects.get(username=request.user)
+
     if request.method == "POST":
         author = EditProfile(request.POST,request.FILES,instance= user.author)
         author.save()
         messages.add_message(request,messages.INFO,'Edited Successfully !!!')
     else:
         author = EditProfile(instance=user.author)
+
     context = {
         'author':author,
     }
-    return render(request,'post/edit-user.html',context)
 
+    return render(request,'post/edit-user.html',context)
 
 def mypost(request):
     posts = BlogPost.objects.all().filter(author=request.user)
@@ -156,9 +172,12 @@ def chat(request):
         chat = request.POST.get('message')
         new_chat = Chat(sender=request.user,message=chat)
         new_chat.save()
+
     chats = Chat.objects.all()
+
     context = {
         'chats':chats
     }
+    
     return render(request,'post/chat.html',context)
 
