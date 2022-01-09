@@ -1,4 +1,4 @@
-## Feautes Incorporated :
+## Features Incorporated :
 
 - Edit Profile as Author
 
@@ -9,3 +9,5 @@
 - Public chat box
 
 - Post I have posted till now
+
+Hosted Url : http://kishmatblog.pythonanywhere.com/
