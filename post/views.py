@@ -144,6 +144,7 @@ def create_post(request):
 
     return render(request,'post/createpost.html',context)
 
+@login_required(login_url='login')
 def editprofile(request):
     user = User.objects.get(username=request.user)
 
@@ -167,6 +168,7 @@ def mypost(request):
     }
     return render(request,'post/mypost.html',context)
 
+@login_required(login_url='login')
 def chat(request):
     if request.method == "POST":
         chat = request.POST.get('message')
