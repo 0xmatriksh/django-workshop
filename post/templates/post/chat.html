@@ -16,20 +16,39 @@ Public Chat
         <div id="chat-box" style="height:450px; padding: 10px; overflow: auto; overflow-x: hidden;">
 
             {% for chat in chats %}
-            <div style="padding: 5px;">
-
-                <div style="display: inline-block; width: 80px; height: fit-content; word-wrap:break-word;">
-                    {{chat.sender}} :
+            {% if chat.sender == request.user %}
+            <div style="padding: 5px; float: right;">
+                
+                <div style="display: inline-block; background-color: lightblue; border: 1px solid; width:250px; height: fit-content;
+                 word-wrap:break-word;  padding: 5px; border-radius: 15px;">
+                    <span style="font-weight: bold;">{{chat.message}}</span>
+                    <span style="font-size: 10px; font-style: italic;">{{chat.created_at|naturaltime}}</span>
                 </div>
 
-                <div style=" background-color: lightblue; border: 1px solid; width:350px; height: fit-content;
+                <div style="display: inline-block; width: 80px; height: fit-content; word-wrap:break-word;">
+                    {{chat.sender}}
+                </div>
+
+
+            </div>
+            {% else %}
+
+            <div style="padding: 5px; float: left;">
+                
+                <div style="display: inline-block; width: 75px; height: fit-content; word-wrap:break-word;">
+                    {{chat.sender}}:
+                </div>
+
+                <div style=" background-color: lightblue; border: 1px solid; width:250px; height: fit-content;
                  word-wrap:break-word; display: inline-block; padding: 5px; border-radius: 15px;">
                     <span style="font-weight: bold;">{{chat.message}}</span>
                     <span style="font-size: 10px; font-style: italic;">{{chat.created_at|naturaltime}}</span>
                 </div>
 
-            </div>
 
+            </div>
+            {% endif %}
+            
             {% endfor %}
 
         </div>
